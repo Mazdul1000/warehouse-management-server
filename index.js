@@ -36,7 +36,7 @@ async function run() {
       const cursor = bikeCollection.find(query);
       const bikes = await cursor.toArray();
       res.send(bikes);
-      console.log(bikes);
+
   });
 
 
