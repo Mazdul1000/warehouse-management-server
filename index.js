@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion,ObjectId } = require('mongodb');
+const query = require('express/lib/middleware/query');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 5000;
@@ -48,12 +49,32 @@ async function run() {
     res.send(bike);
 });
 
+// Get My Items 
+
+app.get('/myItems', async(req, res) => {
+  const email = req.query.email;
+  console.log(email)
+  const query = {email:email};
+  const cursor = bikeCollection.find(query);
+  const myItems = await cursor.toArray();
+  res.send(myItems); 
+})
+
     // POST Items
 
     app.post('/bikes', async (req, res) => {
       const newItem = req.body;
       const result = await bikeCollection.insertOne(newItem);
       res.send(result);
+  })
+
+  // Delete Item
+
+  app.delete('/bike/:id', async(req,res) => {
+    const id = req.params.id;
+    const query = {_id: ObjectId(id)};
+    const result = await bikeCollection.deleteOne(query);
+    res.send(result);
   })
 
   }
