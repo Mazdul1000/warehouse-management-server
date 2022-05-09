@@ -27,8 +27,9 @@ function verifyToken(req, res, next){
       return res.status(403).send({message: 'Forbidden access'});
     }
     req.decoded = decoded;
+    next();
   })
-  next();
+ 
 }
 
 
