@@ -77,7 +77,9 @@ app.get('/myItems', async(req, res) => {
     const filter = {_id:ObjectId(id)};
     const option = {upsert: true};
     const updatedDoc = {
-      $set:{updatedItem}
+      $set:{
+        quantity: updatedItem.quantity
+      }
     };
 
     const result = await bikeCollection.updateOne(filter, updatedDoc,option)
