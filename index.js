@@ -26,6 +26,7 @@ function verifyToken(req, res, next){
     if(err){
       return res.status(403).send({message: 'Forbidden access'});
     }
+    req.decoded = decoded;
   })
   next();
 }
@@ -46,10 +47,7 @@ async function run() {
   app.post('/login', async(req,res) =>{
    const user = req.body;
    const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN, {expiresIn: '30d'});
-  
    res.send({accessToken});
-
-
   })
 
 
@@ -75,12 +73,17 @@ async function run() {
 // Get My Items 
 
 app.get('/myItems', verifyToken, async(req, res) => {
+  const decodedEmail = req.decoded.email;
   const email = req.query.email;
-  console.log(email)
-  const query = {email:email};
+  if(decodedEmail === email){
+    const query = {email:email};
   const cursor = bikeCollection.find(query);
   const myItems = await cursor.toArray();
-  res.send(myItems); 
+  res.send(myItems);
+  } 
+  else{
+     res.status(403).send({message:'Forbidden access'});
+  }
 })
 
     // POST Items
