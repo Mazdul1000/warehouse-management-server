@@ -21,6 +21,12 @@ function verifyToken(req, res, next){
   if(!headerAuth){
     return res.status(401).send({message:'Unauthorized access'})
   }
+  const token = headerAuth.split(' ')[1];
+  jwt.verify(token, process.env.ACCESS_TOKEN, (err, decoded) => {
+    if(err){
+      return res.status(403).send({message: 'Forbidden access'});
+    }
+  })
   next();
 }
 
