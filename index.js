@@ -68,6 +68,21 @@ app.get('/myItems', async(req, res) => {
       res.send(result);
   })
 
+
+  // Update item
+
+  app.put('/bikes/:id', async(req,res) => {
+    const id = req.params.id;
+    const updatedItem = req.body;
+    const filter = {_id:ObjectId(id)};
+    const option = {upsert: true};
+    const updatedDoc = {
+      $set:{updatedItem}
+    };
+
+    const result = await bikeCollection.updateOne(filter, updatedDoc,option)
+    res.send(result);
+  })
   // Delete Item
 
   app.delete('/bike/:id', async(req,res) => {
