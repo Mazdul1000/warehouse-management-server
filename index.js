@@ -16,7 +16,13 @@ app.use(cors());
 app.use(express.json());
 
 
-
+function verifyToken(req, res, next){
+  const headerAuth = req.headers.authorization;
+  if(!headerAuth){
+    return res.status(401).send({message:'Unauthorized access'})
+  }
+  next();
+}
 
 
 
@@ -62,7 +68,7 @@ async function run() {
 
 // Get My Items 
 
-app.get('/myItems', async(req, res) => {
+app.get('/myItems', verifyToken, async(req, res) => {
   const email = req.query.email;
   console.log(email)
   const query = {email:email};
