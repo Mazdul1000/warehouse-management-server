@@ -8,8 +8,6 @@ const app = express();
 const port = process.env.PORT || 5003;
 
 
-// test 
-
 // Middleware
 
 app.use(cors());
@@ -59,7 +57,6 @@ async function run() {
       const cursor = bikeCollection.find(query);
       const bikes = await cursor.toArray();
       res.send(bikes);
-
   });
 
   // Get single item with Id
