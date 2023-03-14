@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14x"
+  },
   "scripts": {
     "start": "node index.js",
     "build": "node index.js",
@@ -19,7 +22,6 @@
     "jsonwebtoken": "^8.5.1",
     "mongo": "^0.1.0",
     "mongodb": "^4.5.0",
-    "nodemon": "^2.0.15",
-    "vercel": "^28.16.15"
+    "nodemon": "^2.0.15"
   }
 }
