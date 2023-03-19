@@ -56,12 +56,9 @@ async function run() {
       const query = {};
       const cursor = bikeCollection.find(query);
       const bikes = await cursor.toArray();
-      res.send("Got the bikes");
+      res.send(bikes);
   });
 
-  app.get('/items', async (req, res) => {
-    res.send("this are the items");
-  })
 
   // Get single item with Id
 
